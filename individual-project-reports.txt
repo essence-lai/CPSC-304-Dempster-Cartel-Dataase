@@ -1,0 +1,36 @@
+Essence Lai h7x9a The Dempster Cartel
+
+My assessment of the group's final achievement:
+	Our group of 3 didn't quite fulfill all of the expectation. However, the group eventually came together and powered through it. Our communication was good, but I found it difficult to split up the work equally. Areas that could be improved was having a fourth member to fill in the holes and also proper delagation of work. Some areas need refinement and additional requirements were prefered to be completed. Group roles were vaguely defined but everyone had excelled at completion by small accomplishments.
+
+Individual Assessment:
+	 My contribution of code was the login ui, the template ui for menus, list boxes, add, double click on table to update/delete/rate, update/delete/rate. Everything in querySet and the basics that implemented the templates in DataQueries.java and the entire DempsterCartelData.sql with triggers and error checking. I did was I felt was more than reasonable of the tasks to achieve and especially enough information to get my group running as most of the ui are modifications from the template. I am most proud of the double click function and the capability of updating the rating as an average of all ratings. I am also proud for making the template ui and the login as I felt that took a huge load off the giant list of tasks. Debugging is most I need of improvement. Our code wasn't perfect and needed more rigorous debugging. I think my teammates will support my achievement and efforts for starting the basics and boosting them to deliver the remaining requirements.
+
+Assessment of Individuals:
+
+	Terry Lin h3b0b
+		perfomance: 5
+		effort: 4
+		accomplishments: 3
+
+		Talented, determined and was engaged on a time crunch. However, would have probably been more productive with a less abstract database. Consistent communication after the first deadline.
+
+	Stephanie Knill k0g0b
+		perfomance: 4 
+		effort: 2
+		accomplishments 3
+
+		Good person, but replied very rarely through out the entire project period and only engaged about a couple days before deadline. Quick learner but may have been better if the approaching deadline was realized sooner.
+
+	Self Eval
+		performance: 5
+		effort: 4
+		accomplisments: 5
+		Look at Individual Assessment
+
+	Assessment of Project:
+		25-30 hours
+		The idea and ui.
+		The timing of deadlines
+		SQL lectures.
+		The deadlines for phases should be more encouraged. Ie during every lecture ("Your group should now be working on ____") as a month ahead deadline.
