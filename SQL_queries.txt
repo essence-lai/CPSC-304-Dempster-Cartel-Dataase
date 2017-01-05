@@ -1,0 +1,484 @@
+CPSC 304 - SQL Queries
+
+
+// =========================== View People ===========================
+
+// == View all types of people ==
+SELECT * FROM Addict, Dealer, Druglord, Supplier
+
+
+
+// === View Addict given criteria ===
+// AID
+“SELECT Name, Cash FROM Addict WHERE AID = “ + AID
+
+// name
+“SELECT Name, Cash FROM Addict WHERE Name Like '%“ + Name + “%'”
+
+// Addicts with cash > CashValue (i.e. owes certain amount $$)
+“SELECT Name, Cash FROM Addict WHERE Cash > “ + CashValue
+
+
+// === View Dealer given criteria ===
+// DID
+“SELECT d.Name, d.Cash, d.Cocaine, d.Rating, l.Name as DrugLordName FROM Dealer d, DrugLord l WHERE d.DID = “ + DID + “ and d.DLID = l.DLID”
+
+// name
+“SELECT d.Name, d.Cash, d.Cocaine, d.Rating, l.Name as DrugLordName FROM Dealer d, DrugLord l WHERE d.Name Like '%” + Name “%' and d.DLID = l.DLID”
+
+// Dealer with cash > CashValue
+“SELECT d.Name, d.Cash, d.Cocaine, d.Rating, l.Name as DrugLordName FROM Dealer d, DrugLord l WHERE d.Cash > “ + CashValue + “ and d.DLID = l.DLID”
+
+// Dealer with cocaine > CocaineValue
+“SELECT d.Name, d.Cash, d.Cocaine, d.Rating, l.Name as DrugLordName FROM Dealer d, DrugLord l WHERE d.Cocaine > “ + CocaineValue + “ and d.DLID = l.DLID”
+
+// Rating > RatingValue
+“SELECT d.Name, d.Cash, d.Cocaine, d.Rating, l.Name as DrugLordName FROM Dealer d, DrugLord l WHERE d.Rating > “ + Rating Value + “ and d.DLID = l.DLID”
+
+// Rating < RatingValue
+“SELECT d.Name, d.Cash, d.Cocaine, d.Rating, l.Name as DrugLordName FROM Dealer d, DrugLord l WHERE d.Rating < “ + Rating Value + “ and d.DLID = l.DLID”
+
+// Find all dealers working under Druglord DLID
+“SELECT d.Name, d.Cash, d.Cocaine, d.Rating, l.Name as DrugLordName FROM Dealer d, DrugLord l WHERE d.DLID = “ + DLID + “ and d.DLID = l.DLID”
+
+
+// === View DrugLord given criteria ===
+// DLID
+“SELECT d1.Name, d1.Cash, d1.Cocaine, d2.Name as WarringLordName FROM DrugLord d1, DrugLord d2 WHERE d1.DLID = “ + DLID + “ and d1.WLID = d2.DLID”
+
+// name
+“SELECT d1.Name, d1.Cash, d1.Cocaine, d2.Name as WarringLordName FROM DrugLord d1, DrugLord d2 WHERE d1.Name Like '%“ + Name + “%' and d1.WLID = d2.DLID”
+
+// DrugLord with cash > CashValue
+“SELECT d1.Name, d1.Cash, d1.Cocaine, d2.Name as WarringLordName FROM DrugLord d1, DrugLord d2 WHERE d1.Cash > “ + CashValue + “ and d1.WLID = d2.DLID”
+
+// DrugLord with cocaine > CocaineValue
+“SELECT d1.Name, d1.Cash, d1.Cocaine, d2.Name as WarringLordName FROM DrugLord d1, DrugLord d2 WHERE d1.Cocaine > “ + CocaineValue + “ and d1.WLID = d2.DLID”
+
+// Find all drugLords at war with DrugLord DLID
+“SELECT d1.Name, d1.Cash, d1.Cocaine, d2.Name as WarringLordName FROM DrugLord d1, DrugLord d2 WHERE d1.WLID = “ + DLID + “ and d1.WLID = d2.DLID” 
+
+
+// === View Supplier given criteria ===
+// SID
+“SELECT Name FROM Supplier WHERE SID = “ + SID
+
+// name
+“SELECT Name FROM Supplier WHERE Name Like '%“ + Name + “%'”
+
+
+
+
+// =========================== View Transactions, Territory ===========================
+Select * From SupplyTrans, DistTrans
+
+// ===== View Supply Transaction =====
+“Select st.STID, st.cash, st.cocaine, st.transDate, s.name as SupplierName, d.name as DrugLord From SupplyTrans st, Supplier s, DrugLord d WHERE st.SID = s.SID and st.DLID = d.DLID”
+
+// STID
+“Select st.STID, st.cash, st.cocaine, st.transDate, s.name as SupplierName, d.name as DrugLord 
+From SupplyTrans st, Supplier s, DrugLord d 
+WHERE st.SID = s.SID and st.DLID = d.DLID and st.STID = “ + STID
+
+// Date (how do you specify type date???)
+“Select st.STID, st.cash, st.cocaine, st.transDate, s.name as SupplierName, d.name as DrugLord From SupplyTrans st, Supplier s, DrugLord d WHERE st.SID = s.SID and st.DLID = d.DLID and st.transDate = “ + Date
+
+// Cocaine > CocaineValue
+“Select st.STID, st.cash, st.cocaine, st.transDate, s.name as SupplierName, d.name as DrugLord From SupplyTrans st, Supplier s, DrugLord d WHERE st.SID = s.SID and st.DLID = d.DLID and st.cocaine > “ + CocaineValue
+
+// Cash > CashValue
+“Select st.STID, st.cash, st.cocaine, st.transDate, s.name as SupplierName, d.name as DrugLord From SupplyTrans st, Supplier s, DrugLord d WHERE st.SID = s.SID and st.DLID = d.DLID and st.cash > “ + CashValue
+
+
+
+// ===== View Distribution Transaction =====
+Select dt.DTID, dt.cash, dt.cocaine, dt.transDate, d.name as Dealer, dl.name as DrugLord, t.name as Territory, a.name as Addict From DistTrans dt, Dealer d, DrugLord dl, Territory t, Addict a WHERE dt.DID = d.DID and dt.DLID = dl.DLID and dt.TID = t.TID and dt.AID = a.AID
+
+// DTID
+“Select dt.DTID, dt.cash, dt.cocaine, dt.transDate, d.name as Dealer, dl.name as DrugLord, t.name as Territory, a.name as Addict From DistTrans dt, Dealer d, DrugLord dl, Territory t, Addict a WHERE dt.DID = d.DID and dt.DLID = dl.DLID and dt.TID = t.TID and dt.AID = a.AID and dt.DTID = “ + DTID
+
+// all DT for Dealer DID
+“Select dt.DTID, dt.cash, dt.cocaine, dt.transDate, d.name as Dealer, dl.name as DrugLord, t.name as Territory, a.name as Addict From DistTrans dt, Dealer d, DrugLord dl, Territory t, Addict a WHERE dt.DID = d.DID and dt.DLID = dl.DLID and dt.TID = t.TID and dt.AID = a.AID and dt.DID = “ + DID
+
+
+// all DT that DrugLord DLID oversaw
+“Select dt.DTID, dt.cash, dt.cocaine, dt.transDate, d.name as Dealer, dl.name as DrugLord, t.name as Territory, a.name as Addict From DistTrans dt, Dealer d, DrugLord dl, Territory t, Addict a WHERE dt.DID = d.DID and dt.DLID = dl.DLID and dt.TID = t.TID and dt.AID = a.AID and dt.DLID = “ + DLID
+
+// all DT in Territory TID
+“Select dt.DTID, dt.cash, dt.cocaine, dt.transDate, d.name as Dealer, dl.name as DrugLord, t.name as Territory, a.name as Addict From DistTrans dt, Dealer d, DrugLord dl, Territory t, Addict a WHERE dt.DID = d.DID and dt.DLID = dl.DLID and dt.TID = t.TID and dt.AID = a.AID and dt.TID = “ + TID
+
+// all DT involving Addict AID
+“Select dt.DTID, dt.cash, dt.cocaine, dt.transDate, d.name as Dealer, dl.name as DrugLord, t.name as Territory, a.name as Addict From DistTrans dt, Dealer d, DrugLord dl, Territory t, Addict a WHERE dt.DID = d.DID and dt.DLID = dl.DLID and dt.TID = t.TID and dt.AID = a.AID and dt.AID = “ + AID
+
+// Date
+“Select dt.DTID, dt.cash, dt.cocaine, dt.transDate, d.name as Dealer, dl.name as DrugLord, t.name as Territory, a.name as Addict From DistTrans dt, Dealer d, DrugLord dl, Territory t, Addict a WHERE dt.DID = d.DID and dt.DLID = dl.DLID and dt.TID = t.TID and dt.AID = a.AID and dt.transDate = “ + Date
+
+// Cocaine > CocaineValue
+“Select dt.DTID, dt.cash, dt.cocaine, dt.transDate, d.name as Dealer, dl.name as DrugLord, t.name as Territory, a.name as Addict From DistTrans dt, Dealer d, DrugLord dl, Territory t, Addict a WHERE dt.DID = d.DID and dt.DLID = dl.DLID and dt.TID = t.TID and dt.AID = a.AID and dt.cocaine > “ + CocaineValue
+
+// Cash > CashValue
+“Select dt.DTID, dt.cash, dt.cocaine, dt.transDate, d.name as Dealer, dl.name as DrugLord, t.name as Territory, a.name as Addict From DistTrans dt, Dealer d, DrugLord dl, Territory t, Addict a WHERE dt.DID = d.DID and dt.DLID = dl.DLID and dt.TID = t.TID and dt.AID = a.AID and dt.cash > “ + CashValue
+
+
+// ===== View Territories =====
+“SELECT * From Territory”
+
+// TID
+“SELECT * From Territory WHERE TID = ” + TID
+// Name
+“SELECT * From Territory WHERE Name Like '%“ + Name + “%'”
+
+// =========================== Add/Remove People ===========================
+
+
+?? Cascade upon deletion????
+?? Resolve conflict when add??
+
+// === Add Drug Lord ===
+“INSERT INTO DrugLord (DLID, Cash, Cocaine, Name, WLID)
+VALUES (“ + DLID “,” + cash + ”,” + cocaine + ”,“ + name + “,” + warWith + “)”
+
+// === Remove Drug Lord ===
+// DLID
+“DELETE FROM DrugLord WHERE DLID = “ + DLID
+// Name
+“DELETE FROM DrugLord WHERE Name Like '%“ + Name + “%'”
+
+// === Add Supplier ===
+“INSERT INTO Supplier (SID, Name) VALUES (“ + SID + “,” + Name + “)”
+
+// === Remove Supplier ===
+// SID
+“DELETE FROM Supplier WHERE SID = “ + SID
+// Name
+“DELETE FROM Supplier WHERE Name Like '%“ + Name + “%'”
+
+// === Add Dealer ===
+“INSERT INTO Dealer (DID, Cash, Cocaine, Name, DLID, Rating) VALUES (“ + DID “,” + Cash “,” + Cocaine + “,” + Name + “,” + DLID + “,” + Rating + ”)”
+
+// === Remove Dealer ===
+// DID
+“DELETE FROM Dealer WHERE DID = “ + DID
+// Name
+“DELETE FROM Dealer WHERE Name Like '%“ + Name + “%'”
+
+// === Add Addict ===
+“INSERT INTO Addict (AID, Cash, Name) VALUES (“ + AID + “,” + Cash + “,” + Name + “)”
+
+// === Remove Addict ===
+// AID
+“DELETE FROM Addict WHERE AID = “ + AID
+//Name
+“DELETE FROM Addict WHERE Name Like '%“ + Name + “%'”
+
+
+
+
+// =========================== Add/Remove Transactions, Territory ===========================
+
+// ===== Add Supply Transaction ======
+“INSERT INTO SupplyTrans(STID, Cash, Cocaine, TransDate, SID, DLID) VALUES(“ + STID + “,” + Cash + “,” + Cocaine + “,” + TransDate + “,” + SID + “,” + DLID +”)”
+
+// DrugLord: add cocaine, minus cash ????
+“UPDATE DrugLord SET Cocaine = Cocaine + “ + CocaineValue  + “ WHERE DLID = “ + DLID
+“UPDATE DrugLord SET Cash = Cash - “ + CashValue  + “ WHERE DLID = “ + DLID
+
+
+// ===== Remove Supply Transaction ======
+// STID
+“DELETE FROM SupplyTrans WHERE STID = “ + STID
+
+
+
+
+// ===== Add Distribution Transaction ======
+“INSERT INTO DistTrans(DTID, Cash, Cocaine, TransDate, DID, DLID, TID, AID)
+VALUES(“ + DTID + “,” + Cash + “,” + Cocaine + “,” + TransDate + “,” + DID + “,” + DLID + “,” + TID + “,” + AID + “)”
+
+// Dealer Update: minus cocaine, add cash
+“UPDATE Dealer SET Cocaine = Cocaine - “ + CocaineValue  + “ WHERE DID = “ + DID
+
+// Case 1: addict pays up front
+“UPDATE Dealer SET Cash = Cash + “ + CashValue  + “ WHERE DID = “ + DID
+
+// Case 2: addict puts on tab (i.e. no update on cash for Dealer)
+// Addict: update tab
+“UPDATE Addict SET Cash = Cash + “ + CashValue + “ WHERE AID = “ + AID
+
+
+// ===== Remove Distribution Transaction ======
+// DTID
+“DELETE FROM DistTrans WHERE DTID = “ + DTID
+
+// ===== Add Territory ======
+“INSERT INTO Territory (TID, Name) VALUES “(“ + TID + “,” + Name + “)”
+
+// ===== Remove Territory ======
+// TID
+“DELETE FROM Territory WHERE TID = “ + TID
+
+// Name
+“DELETE FROM Territory WHERE Name Like '%“ + Name + “%'”
+
+
+
+
+// =========================== Transfer Drugs/Money ===========================
+// ============= b/w DrugLord + Dealer (need a table? eeeeeek) =============
+// === Transfer Drugs: Druglord —> Dealer ===
+// Update DrugLord
+“UPDATE DrugLord SET Cocaine = Cocaine - “ + CocaineValue  + “ WHERE DLID = “ + DLID
+
+// Update Dealer
+“UPDATE Dealer SET Cocaine = Cocaine + “ + CocaineValue  + “ WHERE DID = “ + DID
+
+
+
+// === Transfer Money: Dealer —> DrugLord ===
+// Update DrugLord
+“UPDATE DrugLord SET Cash = Cash + “ + CashValue  + “ WHERE DLID = “ + DLID
+
+// Update Dealer
+“UPDATE Dealer SET Cash = Cash - “ + CashValue  + “ WHERE DID = “ + DID
+
+
+// === Transfer Drugs + Money ===
+
+// Update DrugLord
+“UPDATE DrugLord SET Cocaine = Cocaine - “ + CocaineValue  + “ WHERE DLID = “ + DLID
+“UPDATE DrugLord SET Cash = Cash + “ + CashValue  + “ WHERE DLID = “ + DLID
+
+// Update Dealer
+“UPDATE Dealer SET Cocaine = Cocaine + “ + CocaineValue  + “ WHERE DID = “ + DID
+“UPDATE Dealer SET Cash = Cash - “ + CashValue  + “ WHERE DID = “ + DID
+
+
+
+
+
+
+// ===== Addict pay tab??? (need table??) =====
+
+// Update Dealer
+“UPDATE Dealer SET Cash = Cash + “ + CashValue  + “ WHERE DID = “ + DID
+
+// Update Addict
+“UPDATE Addict SET Cash = Cash - “ + CashValue  + “ WHERE DID = “ + DID
+
+
+
+
+
+// =========================== Fun Shit ===========================
+
+
+// ====== Division: Method 1 ======
+// Helper: All transactions involving Addict AID
+“Select DTID
+FROM DistTrans
+WHERE AID = “ + AID
+
+
+// Helper: Find all dealers that have dealt with Addict AID
+SELECT DISTINCT d.Name
+FROM Dealer d, DistTrans t
+WHERE t.DID = d.DID and t.DID = ANY (Select DID FROM DistTrans WHERE AID = “ + AID + “)”
+
+
+// Names of all Dealers w/ transactions not involving Addict AID
+SELECT DISTINCT d.Name
+FROM Dealer d, DistTrans t
+WHERE t.DID = d.DID and t.DID != ALL (Select DID FROM DistTrans WHERE AID = “ + AID + “)”
+
+
+
+
+// ====== Division: Method 2 (D) ====== 
+// Helper: all DID who have made Deals not involving Addict AID
+(SELECT DID FROM DistTrans)
+MINUS
+(SELECT DID FROM DistTrans WHERE AID = “ + AID + “)”
+
+// Names of all Dealers w/ transactions not involving Addict AID
+“SELECT d.Name FROM Dealer d, DistTrans t WHERE t.DID = d.DID and t.DID IN ((SELECT DID FROM DistTrans) MINUS (SELECT DID FROM DistTrans WHERE AID = “ + AID + “)”
+
+
+
+// ======== Division 2 ===========
+// find all Dealers that have dealt in >1 territory
+
+// find all DID in territories
+select distinct DID
+from distTrans;
+
+// find all DID that have dealt in only 1 territory
+select distinct t1.DID
+from distTrans t1, distTrans t2
+where t1.DID = t2.DID and t1.TID != t2.TID
+
+// Actual Function: find all Dealers that have dealt in >1 territory
+select distinct te.Name as TerritoryName, d.name
+from distTrans t, dealer d, territory te
+where t.DID = d.DID and t.TID = te.TID and d.DID != ALL ((select distinct DID from distTrans)
+		   minus
+		   (select distinct t1.DID from distTrans t1, distTrans t2 where t1.DID = t2.DID and t1.TID != t2.TID))
+
+
+// ====== Aggregation (D, DL) ======
+
+
+// ======== Aggregation 00 ===========
+// Find top Dealer sale: i.e. best unit sale
+select d.name, (t.cash/t.cocaine) as UnitPrice
+From distTrans t, dealer d
+Where t.DID = d.DID and (t.cash/t.cocaine) = (select MAX(cash/cocaine) as UnitPrice
+from distTrans);
+
+// ======== Aggregation 0 ===========
+
+// Find unit price of supplyTrans ($/cocaine)
+select (cash/cocaine) as UnitPrice
+from SupplyTrans
+
+
+// Unit price of supply Trans > avg(unit price)
+select (cash/cocaine) as UnitPrice
+from SupplyTrans
+where (cash/cocaine) > (select AVG(cash/cocaine) as UnitPrice
+from SupplyTrans)
+
+
+select SID, DLID, (cash/cocaine) as UnitPrice
+from SupplyTrans
+where (cash/cocaine) = (select MAX(cash/cocaine) as UnitPrice
+from SupplyTrans);
+
+
+
+// Find all drug lord dealt with suspect SID =2
+select s.name as SupplyName, d.Name as DLName, (t.cash/t.cocaine) as UnitPrice
+from supplyTrans t, drugLord d, Supplier s
+where t.SID = s.SID and t.DLID = d.DLID and t.SID = (select SID
+from SupplyTrans
+where (cash/cocaine) = (select MAX(cash/cocaine) as UnitPrice
+from SupplyTrans))
+ORDER BY UnitPrice DESC;
+
+
+// ==== Aggregation 1 ===
+// Find total money owed by all Addicts
+Select SUM(Cash) as TotalCashOwed
+FROM Addict
+
+
+// ===== Aggregation 1b? ===
+// Find all addicts owing money
+Select Name, Cash From Addict Where Cash > 0 Order by Cash Desc
+
+// === Aggregation 2 (DL) ====
+// Select dealer with most cash on hand
+SELECT Name, Cash, Cocaine
+FROM Dealer
+Where Cash = (SELECT max(Cash) From Dealer)
+
+// Order dealers by amount of cash on hand
+SELECT Name, Cash, Cocaine
+FROM Dealer
+ORDER By Cash Desc, Cocaine Desc;
+
+
+
+
+
+// ====== Nested Aggregation w/ Group-By (D?, DL) 1 ======
+// Helper: calculate total $$, cocaine in DistTrans for Dealer DID
+Select SUM(Cash) as TotalSales, SUM(Cocaine) as TotalCocaine
+FROM DistTrans
+WHERE DID = 1
+GROUP BY DID
+
+// Helper: calculate total $$, cocaine in DistTrans for all Dealers
+Select DID, SUM(Cash) as TotalSales, SUM(Cocaine) as TotalCocaine
+FROM DistTrans
+GROUP BY DID
+Order BY TotalSales Desc, TotalCocaine Desc
+
+// calculate total $$, cocaine in DistTrans for all Dealers (use DealerName)
+“Select d.Name, SUM(t.Cash) as TotalSales, SUM(t.Cocaine) as TotalCocaine 
+FROM Dealer d, DistTrans t 
+WHERE d.DID = t.DID 
+Group By d.Name 
+Order BY TotalSales Desc, TotalCocaine Desc”
+
+
+
+
+// ====== Nested Aggregation w/ Group-By  2 ======
+// Drug Lord: view total cash each dealer owes a Drug Lord DLID
+
+// ====== Helper 1 =====
+// Find AID, and a.Cash for a DrugDealer DID
+“Select a.AID, a.Cash 
+From DistTrans t, Addict a
+Where t.AID = a.AID and DID = “ + DID
+
+
+// Find SUM(a.Cash) for a DrugDealer DID
+“Select SUM(a.Cash)
+From DistTrans t, Addict a
+Where t.AID = a.AID and t.DID = “ + DID
+
+
+// Find SUM(a.Cash), d.Cash for a DrugDealer DID
+“Select SUM(a.Cash), d.Cash
+From DistTrans t, Addict a, Dealer d
+Where t.AID = a.AID and t.DID = d.DID and t.DID = “ + DID
+GROUP BY d.Cash
+
+// Find (SUM(a.Cash) + d.Cash) for a DrugDealer DID
+“Select d.DID, (SUM(a.Cash) + d.Cash) as TotalCash
+From DistTrans t, Addict a, Dealer d
+Where t.AID = a.AID and t.DID = d.DID and t.DID = 1
+GROUP BY d.DID, d.Cash
+
+// ====== Helper 2 =====
+
+// Find DID for a DrugLord DLID
+“Select DID
+From Dealer
+Where DLID = “ + DLID
+
+
+// ==== Actual Function… ====
+// Drug Lord: view total cash each dealer owes a Drug Lord DLID=1
+Select d.NAME, (SUM(a.Cash) + d.Cash) as TotalCash
+From DistTrans t, Addict a, Dealer d
+Where t.AID = a.AID and t.DID = d.DID and t.DID IN 
+(SELECT d.DID
+FROM Dealer d, DrugLord l
+WHERE d.DLID = l.DLID AND l.DLID = 1)
+GROUP BY d.NAME, d.Cash
+Order by d.Cash DESC;
+
+
+
+
+Select d.NAME, (SUM(a.Cash) + d.Cash) as TotalCash
+From DistTrans t, Addict a, Dealer d
+Where t.AID = a.AID and t.DID = d.DID and t.DID IN 
+(SELECT d.DID
+FROM Dealer d, DrugLord l
+WHERE d.DLID = l.DLID AND l.Name Like '%Juan David Ochoa%')
+GROUP BY d.NAME, d.Cash
+Order by d.Cash DESC;
+
+// !!!! ADD ORDER BY!!!!
+
+
+// Java shit
+“Select d.NAME, (SUM(a.Cash) + d.Cash) as TotalCash
+From DistTrans t, Addict a, Dealer d
+Where t.AID = a.AID and t.DID = d.DID and t.DID IN (SELECT DID FROM Dealer WHERE DLID = “ + DLID + “) 
+GROUP BY d.NAME, d.Cash
+Order by d.Cash DESC
+
